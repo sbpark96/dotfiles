@@ -19,6 +19,7 @@ Clone this repository and run the installation script:
 ```bash
 git clone https://github.com/sbpark96/dotfiles.git ~/dotfiles
 cd ~/dotfiles
+chmod +x install.sh
 ./install.sh
 ```
 
