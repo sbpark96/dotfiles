@@ -1,0 +1,22 @@
+# .gitignore
+
+# Mac 시스템 파일
+.DS_Store
+
+# 민감한 정보 (절대 올리면 안 됨)
+.env
+.ssh/
+*.pem
+*.key
+id_rsa
+_netrc
+
+# Vim/Neovim 임시 파일
+*.swp
+*.swo
+.netrwhist
+session.vim
+
+# 기타
+node_modules/
+.history/

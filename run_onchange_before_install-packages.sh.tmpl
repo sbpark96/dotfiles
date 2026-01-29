@@ -1,0 +1,30 @@
+#!/bin/bash
+
+set -e
+
+{{ if eq .chezmoi.os "linux" -}}
+echo "🐧 Linux detected. Installing base dependencies..."
+sudo apt update
+sudo apt install -y build-essential procps curl file git
+{{ else if eq .chezmoi.os "darwin" -}}
+echo "🍎 MacOS detected."
+# xcode-select --install || true  # (맥은 이미 되어있을 테니 주석 처리, 필요하면 해제)
+{{ end -}}
+
+# 1. Homebrew 설치 (없으면 설치)
+if ! command -v brew &> /dev/null; then
+    echo "🍺 Installing Homebrew..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    
+    {{ if eq .chezmoi.os "linux" -}}
+    echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> $HOME/.profile
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+    {{ end -}}
+fi
+
+# 2. Brewfile 실행
+# Brewfile 내용이 바뀌면 이 스크립트를 재실행하게 만드는 매직 코드 (해시값 체크)
+# Brewfile hash: {{ include "Brewfile" | sha256sum }}
+
+echo "📦 Installing packages from Brewfile..."
+brew bundle --file={{ joinPath .chezmoi.sourceDir "Brewfile" }}

@@ -1,0 +1,185 @@
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
+if [[ -f "/opt/homebrew/bin/brew" ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [[ -f "/usr/local/bin/brew" ]]; then
+    eval "$(/usr/local/bin/brew shellenv)"
+elif [[ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
+
+# Path to your Oh My Zsh installation.
+export ZSH="$HOME/.oh-my-zsh"
+
+# Set name of the theme to load --- if set to "random", it will
+# load a random theme each time Oh My Zsh is loaded, in which case,
+# to know which specific one was loaded, run: echo $RANDOM_THEME
+# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+ZSH_THEME="passion"
+
+# Set list of themes to pick from when loading at random
+# Setting this variable when ZSH_THEME=random will cause zsh to load
+# a theme from this variable instead of looking in $ZSH/themes/
+# If set to an empty array, this variable will have no effect.
+# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+
+# Uncomment the following line to use case-sensitive completion.
+# CASE_SENSITIVE="true"
+
+# Uncomment the following line to use hyphen-insensitive completion.
+# Case-sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
+
+# Uncomment one of the following lines to change the auto-update behavior
+# zstyle ':omz:update' mode disabled  # disable automatic updates
+# zstyle ':omz:update' mode auto      # update automatically without asking
+# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
+
+# Uncomment the following line to change how often to auto-update (in days).
+# zstyle ':omz:update' frequency 13
+
+# Uncomment the following line if pasting URLs and other text is messed up.
+# DISABLE_MAGIC_FUNCTIONS="true"
+
+# Uncomment the following line to disable colors in ls.
+# DISABLE_LS_COLORS="true"
+
+# Uncomment the following line to disable auto-setting terminal title.
+# DISABLE_AUTO_TITLE="true"
+
+# Uncomment the following line to enable command auto-correction.
+# ENABLE_CORRECTION="true"
+
+# Uncomment the following line to display red dots whilst waiting for completion.
+# You can also set it to another string to have that shown instead of the default red dots.
+# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
+# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
+# COMPLETION_WAITING_DOTS="true"
+
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# You can set one of the optional three formats:
+# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# or set a custom format using the strftime function format specifications,
+# see 'man strftime' for details.
+# HIST_STAMPS="mm/dd/yyyy"
+
+# Would you like to use another custom folder than $ZSH/custom?
+# ZSH_CUSTOM=/path/to/new-custom-folder
+
+# Which plugins would you like to load?
+# Standard plugins can be found in $ZSH/plugins/
+# Custom plugins may be added to $ZSH_CUSTOM/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(
+	git
+	zsh-autosuggestions
+	fzf
+	history-substring-search
+	zsh-syntax-highlighting
+	macos
+	brew
+	tmux
+	uv
+	)
+
+source $ZSH/oh-my-zsh.sh
+
+# User configuration
+
+# export MANPATH="/usr/local/man:$MANPATH"
+
+# You may need to manually set your language environment
+# export LANG=en_US.UTF-8
+
+# Preferred editor for local and remote sessions
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='nvim'
+# fi
+
+# Compilation flags
+# export ARCHFLAGS="-arch $(uname -m)"
+
+# Set personal aliases, overriding those provided by Oh My Zsh libs,
+# plugins, and themes. Aliases can be placed here, though Oh My Zsh
+# users are encouraged to define aliases within a top-level file in
+# the $ZSH_CUSTOM folder, with .zsh extension. Examples:
+# - $ZSH_CUSTOM/aliases.zsh
+# - $ZSH_CUSTOM/macos.zsh
+# For a full list of active aliases, run `alias`.
+#
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+if command -v nvim &> /dev/null; then
+    export EDITOR='nvim'
+    export VISUAL='nvim'
+    alias vim='nvim'
+    alias vi='nvim'
+    alias v='nvim'
+fi
+
+# --- Options ---
+unsetopt nomatch             # 와일드카드 매칭 실패 시 에러 방지
+setopt CORRECT               # 명령어 오타 교정
+setopt NO_BEEP               # 비프음 끄기
+setopt INTERACTIVE_COMMENTS  # 쉘 내 주석(#) 허용
+
+# --- History Settings (OMZ 설정 덮어쓰기) ---
+HISTSIZE=50000
+SAVEHIST=100000
+HISTFILE=~/.zsh_history
+
+setopt EXTENDED_HISTORY      # Timestamp 저장 (아까 문법 에러났던 부분 수정됨)
+setopt APPEND_HISTORY        # 기존 파일에 추가
+setopt INC_APPEND_HISTORY    # 명령어 실행 즉시 저장
+setopt SHARE_HISTORY         # 터미널 간 히스토리 실시간 공유
+setopt HIST_IGNORE_DUPS      # 연속 중복 제거
+setopt HIST_IGNORE_SPACE     # 공백으로 시작하는 명령어 무시
+setopt HIST_REDUCE_BLANKS    # 불필요한 공백 제거
+
+# --- Completion Styles (OMZ 이후에 스타일만 지정) ---
+# (compinit은 OMZ가 이미 했으므로 생략하고 스타일만 적용)
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' 'r:|[._-]=* r:|=*'
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*:descriptions' format '%F{yellow}%d%f'
+
+# ==============================================================================
+# Key Bindings for Substring Search
+# ==============================================================================
+# 화살표 위/아래로 히스토리 검색
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+
+# ==============================================================================
+# OS Specific Settings
+# ==============================================================================
+case "$(uname -s)" in
+    Darwin*)    # macOS
+        alias ls='ls -G' # 컬러 활성화
+        
+        # iTerm2 Shell Integration (설치된 경우만)
+        test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+        ;;
+    Linux*)     # Ubuntu
+        alias ls='ls --color=auto' # 컬러 활성화
+        
+        # 클립보드 연동 (xclip 설치 시 pbcopy 사용 가능)
+        if command -v xclip &> /dev/null; then
+            alias pbcopy='xclip -selection clipboard'
+            alias pbpaste='xclip -selection clipboard -o'
+        fi
+        
+        # Ubuntu에서도 iTerm2 연동 스크립트 로드 (SSH 접속 시 기능 활성화)
+        test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+        ;;
+esac
