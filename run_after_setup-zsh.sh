@@ -36,3 +36,20 @@ fi
 if [ ! -f "$HOME/.iterm2_shell_integration.zsh" ]; then
     curl -L https://iterm2.com/shell_integration/zsh -o "$HOME/.iterm2_shell_integration.zsh"
 fi
+
+# 기본 쉘을 zsh로 변경
+# 1. zsh 경로 찾기 (Brew로 설치된 경로 or 시스템 경로)
+ZSH_PATH=$(which zsh)
+
+# 2. 현재 쉘이 zsh가 아니라면 변경 시도
+if [ "$SHELL" != "$ZSH_PATH" ]; then
+    echo "🐚 Changing default shell to zsh..."
+
+    # root인 경우 바로 변경
+    if [ "$(id -u)" -eq 0 ]; then
+        chsh -s "$ZSH_PATH"
+    else
+        # 일반 유저인 경우 비밀번호 없이 시도해보고 안되면 패스
+        sudo chsh -s "$ZSH_PATH" "$USER" || echo "⚠️  Failed to change shell. Try 'chsh -s $(which zsh)' manually."
+    fi
+fi
