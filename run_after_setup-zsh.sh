@@ -1,5 +1,14 @@
 #!/bin/bash
 
+# =========================================================
+# 1. Homebrew 환경 로드 (Brew로 설치된 zsh를 찾기 위해 필수)
+# =========================================================
+if [ -d "/home/linuxbrew/.linuxbrew" ]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+elif [ -d "/opt/homebrew" ]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
 # 1. Oh-My-Zsh 설치
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
     echo "🎨 Installing Oh-My-Zsh..."
