@@ -14,7 +14,7 @@ if [ ! -d "$HOME/.oh-my-zsh" ]; then
     echo "🎨 Installing Oh-My-Zsh..."
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
     # Chezmoi가 관리하는 .zshrc를 덮어쓰지 않도록 제거 (Chezmoi가 나중에 다시 덮어씀)
-    rm "$HOME/.zshrc" 2>/dev/null
+    # rm "$HOME/.zshrc" 2>/dev/null
 fi
 
 # 2. 플러그인 & 테마 설치 함수
